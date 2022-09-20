@@ -18,7 +18,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         //TODO This is just for testing purposes
         lifecycleScope.launch {
-            apiRepository.getSessions()
+            val response = apiRepository.getSessions()
+            println("MIKE response ${response.data}")
+            println("MIKE response ${response.data.size}")
         }
     }
 }
