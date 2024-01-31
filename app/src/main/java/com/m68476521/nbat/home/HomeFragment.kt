@@ -35,10 +35,12 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.clicked.setOnClickListener {
+//        binding.clicked.setOnClickListener {
             lifecycleScope.launch {
                 val response = viewModel.getData()
             }
-        }
+//        }
+
+
     }
 }
