@@ -23,6 +23,7 @@ open class ApiModule {
     @Singleton
     open fun provideKey(): String = ""
 
+
     @Provides
     @Singleton
     open fun createClient(
@@ -39,7 +40,7 @@ open class ApiModule {
     @Singleton
     open fun provideApiService(okHttpClient: OkHttpClient): ApiService =
         Retrofit.Builder()
-            .baseUrl("https://api.giphy.com")
+            .baseUrl("https://gateway.marvel.com/")
             .addConverterFactory(GsonConverterFactory.create(createDateFormatter()))
             .client(okHttpClient)
             .build().create(ApiService::class.java)
@@ -79,7 +80,9 @@ class RequestInterceptor(
         val url = chain.request().url()
             .newBuilder()
 //            .addQueryParameter("X-RapidAPI-Host", "api-nba-v1.p.rapidapi.com")
-            .addQueryParameter("api_key", apiKey)
+            .addQueryParameter("apikey", apiKey)
+            .addQueryParameter("hash", "")
+            .addQueryParameter("ts", "")
             .build()
         val newRequest = chain.request().newBuilder().url(url)
             .header("Accept", "application/json")

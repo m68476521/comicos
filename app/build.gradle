@@ -71,4 +71,6 @@ dependencies {
     def nav_version = "2.5.2"
     // Kotlin
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
 }
