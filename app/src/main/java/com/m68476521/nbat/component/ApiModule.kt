@@ -7,6 +7,8 @@ import com.m68476521.nbat.repository.ApiRepository
 import com.m68476521.nbat.repository.ApiService
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -18,6 +20,7 @@ import javax.inject.Singleton
 //TODO CLEAN THIS
 
 @Module
+@InstallIn(SingletonComponent::class)
 open class ApiModule {
     @Provides
     @Singleton
@@ -44,7 +47,6 @@ open class ApiModule {
             .addConverterFactory(GsonConverterFactory.create(createDateFormatter()))
             .client(okHttpClient)
             .build().create(ApiService::class.java)
-
 
     private fun createDateFormatter(): Gson =
         GsonBuilder()
@@ -81,8 +83,11 @@ class RequestInterceptor(
             .newBuilder()
 //            .addQueryParameter("X-RapidAPI-Host", "api-nba-v1.p.rapidapi.com")
             .addQueryParameter("apikey", apiKey)
+//            .addQueryParameter("hash", "")
+//            .addQueryParameter("ts", "")
             .addQueryParameter("hash", "")
             .addQueryParameter("ts", "")
+
             .build()
         val newRequest = chain.request().newBuilder().url(url)
             .header("Accept", "application/json")
