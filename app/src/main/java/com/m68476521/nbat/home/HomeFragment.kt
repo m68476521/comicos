@@ -7,23 +7,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.m68476521.nbat.component.ApplicationComponent
-import com.m68476521.nbat.component.HasComponent
 import com.m68476521.nbat.databinding.FragmentHomeBinding
 import com.m68476521.nbat.model.MyModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private val viewModel : MyModel by viewModels()
     private lateinit var binding : FragmentHomeBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        (requireActivity().application as? HasComponent<ApplicationComponent>)?.component?.run {
-            inject(viewModel)
-        }
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,13 +27,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        binding.clicked.setOnClickListener {
-            lifecycleScope.launch {
-                val response = viewModel.getData()
-            }
-//        }
-
-
+        lifecycleScope.launch {
+            val response = viewModel.getData()
+        }
     }
 }
