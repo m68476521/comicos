@@ -1,4 +1,4 @@
-package com.m68476521.nbat.repository
+package com.m68476521.comicos.repository
 
 import com.google.gson.annotations.SerializedName
 

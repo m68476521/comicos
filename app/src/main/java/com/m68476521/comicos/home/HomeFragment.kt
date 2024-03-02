@@ -1,4 +1,4 @@
-package com.m68476521.nbat.home
+package com.m68476521.comicos.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.m68476521.nbat.databinding.FragmentHomeBinding
-import com.m68476521.nbat.model.MyModel
+import com.m68476521.comicos.databinding.FragmentHomeBinding
+import com.m68476521.comicos.model.MyModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 @AndroidEntryPoint

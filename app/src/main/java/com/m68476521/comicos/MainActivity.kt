@@ -2,8 +2,9 @@ package com.m68476521.comicos
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.m68476521.nbat.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

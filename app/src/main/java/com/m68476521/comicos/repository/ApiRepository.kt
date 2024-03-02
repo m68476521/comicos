@@ -1,4 +1,4 @@
-package com.m68476521.nbat.repository
+package com.m68476521.comicos.repository
 
 import javax.inject.Inject
 
