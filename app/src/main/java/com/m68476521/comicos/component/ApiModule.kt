@@ -1,10 +1,10 @@
-package com.m68476521.nbat.component
+package com.m68476521.comicos.component
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.m68476521.nbat.BuildConfig
-import com.m68476521.nbat.repository.ApiRepository
-import com.m68476521.nbat.repository.ApiService
+import com.m68476521.comicos.BuildConfig
+import com.m68476521.comicos.repository.ApiRepository
+import com.m68476521.comicos.repository.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
