@@ -10,5 +10,5 @@ interface ApiService {
 //        @Query("rating") type: String,
 //        @Query("offset") pagination: Int,
 //        @Query("limit") limit: Int
-    ) : ResponseBody
+    ) : ComicsResponse
 }
