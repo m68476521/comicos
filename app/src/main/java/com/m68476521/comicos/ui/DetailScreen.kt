@@ -25,16 +25,19 @@ import com.m68476521.comicos.R
 import com.m68476521.comicos.model.MyModel
 
 @Composable
-fun SelectOptionScreen(
+fun DetailViewerScreen(
     viewModel: MyModel,
     subtotal: String = "",
-    options: List<String> = listOf("Blue", "Yellow", "Orange", "Green"),
+    options: ArrayList<String> = arrayListOf("Blue", "Yellow", "Orange", "Green"),
     onSelectionChanged: (String) -> Unit = {},
     onCancelButtonClicked: () -> Unit = {},
     onNextButtonClicked: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     var selectedValue by rememberSaveable { mutableStateOf("") }
+
+    // TODO Just test the data pass, remove this
+    options.add(subtotal)
 
     Column(
         modifier = modifier,

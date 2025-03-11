@@ -15,11 +15,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.m68476521.comicos.model.MyModel
 
 @Composable
-    fun HomeScreen(navController: NavController, viewModel: MyModel) {
+fun HomeScreen(viewModel: MyModel, itemSelected: (result: String?, albumId: String?) -> Unit) {
+
     val data by viewModel.comicsResponseData.collectAsState()
 
     LaunchedEffect(key1 = Unit) {
@@ -38,7 +38,7 @@ import com.m68476521.comicos.model.MyModel
                 color = Color.White,
                 modifier = Modifier
                     .clickable {
-                        navController.navigate(ComicosScreen.Flavor.name)
+                        itemSelected.invoke(currentName.title, currentName.id.toString())
                     }
                     .fillMaxWidth()
                     .padding(16.dp)
