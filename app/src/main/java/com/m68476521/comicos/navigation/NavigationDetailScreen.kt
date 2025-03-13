@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.m68476521.comicos.model.MyModel
 import com.m68476521.comicos.ui.DetailViewerScreen
+import timber.log.Timber
 
 fun NavController.navigateToDetailViewerScreen(
     navOptions: NavOptions? = null,
@@ -14,7 +15,7 @@ fun NavController.navigateToDetailViewerScreen(
     albumName: String
 ) {
     //handlePopBackStack(this)
-    println("MKE albumId $albumId albumName $albumName")
+    Timber.d("MKE albumId $albumId albumName $albumName")
     this.navigate(ScreenDetail(albumId, albumName))
 }
 
@@ -23,7 +24,7 @@ fun NavGraphBuilder.detailViewerScreen(
     defaultAlbumName: String?,
     viewModel: MyModel
 ) {
-    println("MKE ::: $defaultAlbumId $defaultAlbumName")
+    Timber.d("MKE ::: $defaultAlbumId $defaultAlbumName")
 
     composable<ScreenDetail> {
         val args = it.toRoute<ScreenDetail>()
