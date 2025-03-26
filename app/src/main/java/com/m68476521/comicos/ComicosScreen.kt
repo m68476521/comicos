@@ -28,6 +28,7 @@ import com.m68476521.comicos.navigation.ScreenHome
 import com.m68476521.comicos.navigation.navigateToDetailViewerScreen
 import com.m68476521.comicos.navigation.detailViewerScreen
 import com.m68476521.comicos.navigation.homeViewerScreen
+import com.m68476521.comicos.ui.BottomNavigationBar
 import java.lang.String.valueOf
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -63,11 +64,16 @@ fun ComicosApp(
         backStackEntry?.destination?.route ?: ScreenHome
     )
 
-    Scaffold(topBar = {
-        ComicosBar(currentScreen = currentScreen,
-            canNavigateBack = navController.previousBackStackEntry != null,
-            navigateUp = { navController.navigateUp() })
-    }) { innerPadding ->
+    Scaffold(
+        topBar = {
+            ComicosBar(
+                currentScreen = currentScreen,
+                canNavigateBack = navController.previousBackStackEntry != null,
+                navigateUp = { navController.navigateUp() })
+        },
+        bottomBar = {
+            BottomNavigationBar()
+        }) { innerPadding ->
         NavHost(
             navController = navController,
             startDestination = ScreenHome,
