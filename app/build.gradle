@@ -128,4 +128,10 @@ dependencies {
 
     //Timber for logs
     implementation 'com.jakewharton.timber:timber:5.0.1'
+
+    // Arrow
+    def arrow_version = "1.2.4"
+    implementation "io.arrow-kt:arrow-core:$arrow_version"
+    implementation"io.arrow-kt:arrow-fx-coroutines:$arrow_version"
+
 }
