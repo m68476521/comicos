@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.m68476521.comicos.model.MyModel
@@ -58,6 +59,7 @@ class HomeFragment : Fragment() {
             items(result) { currentName ->
                 Text(
                     text = currentName.title.toString(),
+                    fontSize = 16.sp,
                     color = Color.White,
                     modifier = Modifier
                         .fillMaxWidth()

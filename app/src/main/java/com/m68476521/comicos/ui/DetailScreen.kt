@@ -1,5 +1,6 @@
 package com.m68476521.comicos.ui
 
+import CurrencySection
 import FormattedPriceLabel
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -36,7 +37,11 @@ fun DetailViewerScreen(
 ) {
     var selectedValue by rememberSaveable { mutableStateOf("") }
 
+
+CurrencySection()
+
     // TODO Just test the data pass, remove this
+        /*
     options.add(subtotal)
 
     Column(
@@ -102,4 +107,6 @@ fun DetailViewerScreen(
             }
         }
     }
+
+         */
 }

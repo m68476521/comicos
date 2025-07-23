@@ -13,11 +13,12 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
+import okio.Timeout
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import timber.log.Timber
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
-
-//TODO CLEAN THIS
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -26,17 +27,18 @@ open class ApiModule {
     @Singleton
     open fun provideKey(): String = ""
 
-
     @Provides
     @Singleton
     open fun createClient(
         apiKey: String,
         loggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient {
-        return OkHttpClient.Builder()
+        var client = OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .addInterceptor(RequestInterceptor(apiKey))
             .build()
+
+        return client
     }
 
     @Provides
@@ -70,21 +72,12 @@ class RequestInterceptor(
     private val apiKey: String = ""
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-//        val request = chain.request()
-//        val newRequest = request.newBuilder()
-////            .header("Accept", "application/json")
-////            .header("Content-type", "application/json")
-//            .header("X-RapidAPI-Key", "")
-//            .header("X-RapidAPI-Host", "api-nba-v1.p.rapidapi.com")
-//            .build()
-//        return chain.proceed(newRequest)
+        val ts = System.currentTimeMillis()
 
+        Timber.d("MIKE TS " + ts.toString())
         val url = chain.request().url()
             .newBuilder()
-//            .addQueryParameter("X-RapidAPI-Host", "api-nba-v1.p.rapidapi.com")
             .addQueryParameter("apikey", apiKey)
-//            .addQueryParameter("hash", "")
-//            .addQueryParameter("ts", "")
             .addQueryParameter("hash", "")
             .addQueryParameter("ts", "")
 
