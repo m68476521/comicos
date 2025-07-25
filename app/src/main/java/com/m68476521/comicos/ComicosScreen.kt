@@ -25,9 +25,9 @@ import androidx.navigation.compose.rememberNavController
 import com.m68476521.comicos.R
 import com.m68476521.comicos.model.MyModel
 import com.m68476521.comicos.navigation.ScreenHome
-import com.m68476521.comicos.navigation.navigateToDetailViewerScreen
 import com.m68476521.comicos.navigation.detailViewerScreen
 import com.m68476521.comicos.navigation.homeViewerScreen
+import com.m68476521.comicos.navigation.navigateToDetailViewerScreen
 import com.m68476521.comicos.ui.BottomNavigationBar
 import java.lang.String.valueOf
 
@@ -37,59 +37,69 @@ fun ComicosBar(
     currentScreen: String,
     canNavigateBack: Boolean,
     navigateUp: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-    TopAppBar(title = { Text(currentScreen) }, colors = TopAppBarDefaults.mediumTopAppBarColors(
-        containerColor = MaterialTheme.colorScheme.primaryContainer
-    ), modifier = modifier, navigationIcon = {
-        if (canNavigateBack) {
-            IconButton(onClick = navigateUp) {
-                Icon(
-                    imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = stringResource(R.string.back_button)
-                )
+    TopAppBar(
+        title = { Text(currentScreen) },
+        colors =
+            TopAppBarDefaults.mediumTopAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+            ),
+        modifier = modifier,
+        navigationIcon = {
+            if (canNavigateBack) {
+                IconButton(onClick = navigateUp) {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = stringResource(R.string.back_button),
+                    )
+                }
             }
-        }
-    })
+        },
+    )
 }
 
 @Composable
 fun ComicosApp(
-    viewModel: MyModel = viewModel(), navController: NavHostController = rememberNavController()
+    viewModel: MyModel = viewModel(),
+    navController: NavHostController = rememberNavController(),
 ) {
     // Get current back stack entry
     val backStackEntry by navController.currentBackStackEntryAsState()
     // Get the name of the current screen
-    val currentScreen = valueOf(
-        backStackEntry?.destination?.route ?: ScreenHome
-    )
+    val currentScreen =
+        valueOf(
+            backStackEntry?.destination?.route ?: ScreenHome,
+        )
 
     Scaffold(
         topBar = {
             ComicosBar(
                 currentScreen = currentScreen,
                 canNavigateBack = navController.previousBackStackEntry != null,
-                navigateUp = { navController.navigateUp() })
+                navigateUp = { navController.navigateUp() },
+            )
         },
         bottomBar = {
             BottomNavigationBar()
-        }) { innerPadding ->
+        },
+    ) { innerPadding ->
         NavHost(
             navController = navController,
             startDestination = ScreenHome,
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(innerPadding)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+                    .padding(innerPadding),
         ) {
-
-            fun goToDetailViewerScreen(navController: NavController): (albumName: String, albumId: String) -> Unit {
-                return { albumId, albumName ->
+            fun goToDetailViewerScreen(navController: NavController): (albumName: String, albumId: String) -> Unit =
+                { albumId, albumName ->
                     navController.navigateToDetailViewerScreen(
-                        albumId = albumId, albumName = albumName
+                        albumId = albumId,
+                        albumName = albumName,
                     )
                 }
-            }
 
             homeViewerScreen(viewModel) { name, albumId ->
                 if (name != null && albumId != null) {
@@ -98,7 +108,6 @@ fun ComicosApp(
             }
 
             detailViewerScreen("", "", viewModel)
-
         }
     }
 }

@@ -1,5 +1,5 @@
 [versions]
-android = "8.6.0"
+android = "8.9.3"
 dagger-hilt-version = "2.56.2"
 activityCompose = "1.10.1"
 adapterRxjava3 = "2.9.0"
@@ -26,6 +26,7 @@ recyclerview = "1.4.0"
 retrofit = "3.0.0"
 timber = "5.0.1"
 kotlin = "2.2.0"
+ktlintVersion = "13.0.0"
 
 [libraries]
 adapter-rxjava3 = { module = "com.squareup.retrofit2:adapter-rxjava3", version.ref = "adapterRxjava3" }
@@ -75,3 +76,5 @@ org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.re
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger-hilt-version" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 compose-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintVersion"}
+

@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose.serialization)
+    alias(libs.plugins.ktlint)
     kotlin("kapt")
 }
 
@@ -28,7 +29,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -125,7 +126,7 @@ dependencies {
     implementation(libs.kotlinx.metadata.jvm)
     implementation(libs.kotlinx.serialization.json)
 
-    //Timber for logs
+    // Timber for logs
     implementation(libs.timber)
 
     // Arrow

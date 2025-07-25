@@ -28,14 +28,14 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
-
     private val viewModel: MyModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return ComposeView(requireContext()).apply {
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View =
+        ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 MaterialTheme {
@@ -43,7 +43,6 @@ class HomeFragment : Fragment() {
                 }
             }
         }
-    }
 
     @Composable
     fun myList(viewModel: MyModel) {
@@ -55,23 +54,23 @@ class HomeFragment : Fragment() {
 
         val result = data.data?.results ?: return
         LazyColumn {
-
             items(result) { currentName ->
                 Text(
                     text = currentName.title.toString(),
                     fontSize = 16.sp,
                     color = Color.White,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
                 )
                 HorizontalDivider(
-                    modifier = Modifier
-                        .padding(6.dp),
-                    thickness = 2.dp
+                    modifier =
+                        Modifier
+                            .padding(6.dp),
+                    thickness = 2.dp,
                 )
             }
         }
     }
-
 }

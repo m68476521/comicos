@@ -5,4 +5,5 @@ plugins {
     alias(libs.plugins.dagger.hilt) apply false
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.compose.serialization) apply false
+    alias(libs.plugins.ktlint) apply false
 }

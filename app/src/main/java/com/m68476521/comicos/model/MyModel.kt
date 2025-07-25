@@ -15,24 +15,24 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
+class MyModel
+    @Inject
+    constructor(
+        private val repository1: ApiRepository,
+    ) : ViewModel() {
+        private val comicsResponse = MutableStateFlow(ComicsResponse())
 
-class MyModel @Inject constructor(private val repository1: ApiRepository)
-: ViewModel() {
+        val comicsResponseData: StateFlow<ComicsResponse> = comicsResponse.asStateFlow()
 
-    private val comicsResponse = MutableStateFlow(ComicsResponse())
-
-    val comicsResponseData: StateFlow<ComicsResponse> = comicsResponse.asStateFlow()
-
-    fun getData() {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository1.getSessions().fold ({
-                Timber.e("There was an error")
-            }, { response ->
-                comicsResponse.update {
-                    response
-                }
-            })
+        fun getData() {
+            viewModelScope.launch(Dispatchers.IO) {
+                repository1.getSessions().fold({
+                    Timber.e("There was an error")
+                }, { response ->
+                    comicsResponse.update {
+                        response
+                    }
+                })
+            }
         }
     }
-
-}

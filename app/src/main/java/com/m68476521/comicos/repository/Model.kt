@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class ComicsResponse(
     val code: Int? = null,
     val status: String? = null,
-    val data: DataResponse? = null
+    val data: DataResponse? = null,
 )
 
 data class DataResponse(
@@ -13,26 +13,26 @@ data class DataResponse(
     val limit: Int? = null,
     val total: Int? = null,
     val count: Int? = null,
-    val results: List<Results>? = null
+    val results: List<Results>? = null,
 )
 
 data class Results(
     val id: Int? = null,
-    val digitalId : Int? = null,
+    val digitalId: Int? = null,
     val title: String? = null,
     val issueNumber: Int? = null,
-    val variantDescription:String? = null,
-    val description:String? = null,
-    val modified:String? = null,
-    val isbn:String? = null,
-    val upc:String? = null,
-    val diamondCode:String? = null,
-    val ean:String? = null,
-    val issn:String? = null,
-    val format:String? = null,
+    val variantDescription: String? = null,
+    val description: String? = null,
+    val modified: String? = null,
+    val isbn: String? = null,
+    val upc: String? = null,
+    val diamondCode: String? = null,
+    val ean: String? = null,
+    val issn: String? = null,
+    val format: String? = null,
     val pageCount: Int? = null,
-    //val textObjects:String? = null,
-    val resourceURI:String? = null,
+    // val textObjects:String? = null,
+    val resourceURI: String? = null,
     val urls: List<UrlData>? = null,
     val series: Serie? = null,
     val variants: List<Variant>? = null,
@@ -45,79 +45,84 @@ data class Results(
     val creators: Creator? = null,
     val characters: Characters? = null,
     val stories: Storie? = null,
-    val events: Event? = null
+    val events: Event? = null,
 )
 
-data class  UrlData(
+data class UrlData(
     val type: String? = null,
-    val url: String? = null
+    val url: String? = null,
 )
+
 data class Serie(
     val resourceURI: String? = null,
-    val name: String? = null
+    val name: String? = null,
 )
 
 data class Variant(
     val resourceURI: String? = null,
-    val name: String? = null
+    val name: String? = null,
 )
+
 data class DateData(
     val type: String? = null,
-    val date: String? = null
+    val date: String? = null,
 )
+
 data class Price(
     val type: String? = null,
-    val price: Double? = null
+    val price: Double? = null,
 )
+
 data class Thumbnail(
     val path: String? = null,
-    val extension: String? = null
+    val extension: String? = null,
 )
 
 data class Creator(
     val available: Int? = null,
     val collectionURI: String? = null,
     val items: List<ItemCreator>? = null,
-    val returned: Int? = null
+    val returned: Int? = null,
 )
 
 data class ItemCreator(
     val resourceURI: String? = null,
     val name: String? = null,
-    val role: String? = null
+    val role: String? = null,
 )
 
 data class Characters(
     val available: Int? = null,
     val collectionURI: String? = null,
     val items: List<ItemCreator>? = null,
-    val returned: Int? = null
+    val returned: Int? = null,
 )
 
 data class Storie(
     val available: Int? = null,
     val collectionURI: String? = null,
     val items: List<ItemStorie>? = null,
-    val returned: Int? = null
+    val returned: Int? = null,
 )
 
 data class ItemStorie(
     val resourceURI: String? = null,
     val name: String? = null,
-    val type: String? = null
+    val type: String? = null,
 )
 
 data class Event(
     val available: Int? = null,
     val collectionURI: String? = null,
     val items: List<ItemStorie>? = null,
-    val returned: Int? = null
+    val returned: Int? = null,
 )
+
 data class Pagination(
     @SerializedName("total_count")
     val totalCount: Int,
     val count: Int,
-    val offset: Int
+    val offset: Int,
 )
 
 data class Image(
@@ -127,7 +132,7 @@ data class Image(
     @SerializedName("embed_url")
     val embedUrl: String,
     val title: String,
-    val images: SubImage
+    val images: SubImage,
 )
 
 data class SubImage(
@@ -153,12 +158,13 @@ data class SubImage(
     @SerializedName("preview_gif")
     val previewGif: ImageSmall,
     @SerializedName("fixed_height")
-    val fixedHeight: ImageOriginal
+    val fixedHeight: ImageOriginal,
 )
+
 data class ImageOriginal(
-    val url: String
+    val url: String,
 )
 
 data class ImageSmall(
-    val url: String?
+    val url: String?,
 )

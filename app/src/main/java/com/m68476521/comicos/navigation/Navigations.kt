@@ -6,4 +6,7 @@ import kotlinx.serialization.Serializable
 object ScreenHome
 
 @Serializable
-data class ScreenDetail(val albumId: String, val albumName: String)
+data class ScreenDetail(
+    val albumId: String,
+    val albumName: String,
+)

@@ -27,8 +27,10 @@ import androidx.compose.ui.unit.sp
 import com.m68476521.comicos.model.MyModel
 
 @Composable
-fun HomeScreen(viewModel: MyModel, itemSelected: (result: String?, albumId: String?) -> Unit) {
-
+fun HomeScreen(
+    viewModel: MyModel,
+    itemSelected: (result: String?, albumId: String?) -> Unit,
+) {
     val data by viewModel.comicsResponseData.collectAsState()
 
     var text by remember {
@@ -41,10 +43,10 @@ fun HomeScreen(viewModel: MyModel, itemSelected: (result: String?, albumId: Stri
 
     val result = data.data?.results ?: return
     LazyColumn(
-        modifier = Modifier
-            .height(100.dp)
+        modifier =
+            Modifier
+                .height(100.dp),
     ) {
-
         item {
             TextField(
                 modifier = Modifier.fillMaxWidth(),
@@ -52,18 +54,19 @@ fun HomeScreen(viewModel: MyModel, itemSelected: (result: String?, albumId: Stri
                 onValueChange = { newText ->
                     text = newText
                 },
-                textStyle = TextStyle(
-                    fontSize = 21.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontStyle = FontStyle.Normal,
-                    color = Color.Blue
-                ),
+                textStyle =
+                    TextStyle(
+                        fontSize = 21.sp,
+                        fontWeight = FontWeight.Bold,
+                        fontStyle = FontStyle.Normal,
+                        color = Color.Blue,
+                    ),
                 label = {
                     Text(text = "your name")
                 },
                 placeholder = {
                     Text(text = "Please enter yor name")
-                }
+                },
             )
         }
 
@@ -71,17 +74,18 @@ fun HomeScreen(viewModel: MyModel, itemSelected: (result: String?, albumId: Stri
             Text(
                 text = currentName.title.toString(),
                 color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier
-                    .clickable {
-                        itemSelected.invoke(currentName.title, currentName.id.toString())
-                    }
-                    .fillMaxWidth()
-                    .padding(16.dp)
+                modifier =
+                    Modifier
+                        .clickable {
+                            itemSelected.invoke(currentName.title, currentName.id.toString())
+                        }.fillMaxWidth()
+                        .padding(16.dp),
             )
             HorizontalDivider(
-                modifier = Modifier
-                    .padding(6.dp),
-                thickness = 2.dp
+                modifier =
+                    Modifier
+                        .padding(6.dp),
+                thickness = 2.dp,
             )
         }
     }
