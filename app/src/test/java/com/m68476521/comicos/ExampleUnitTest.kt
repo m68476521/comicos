@@ -1,6 +1,6 @@
 package com.m68476521.comicos
 
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 /**
