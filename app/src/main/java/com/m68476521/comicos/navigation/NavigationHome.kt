@@ -8,13 +8,13 @@ import com.m68476521.comicos.model.MyModel
 import com.m68476521.comicos.ui.HomeScreen
 
 fun NavController.navigateToHomeScreen(navOptions: NavOptions? = null) {
-    //handlePopBackStack(this)
+    // handlePopBackStack(this)
     this.navigate(ScreenHome, navOptions)
 }
 
 fun NavGraphBuilder.homeViewerScreen(
     viewModel: MyModel,
-    navigateToDetailsScreen: (name: String?, albumId: String?) -> Unit
+    navigateToDetailsScreen: (name: String?, albumId: String?) -> Unit,
 ) {
     composable<ScreenHome> {
         HomeScreen(viewModel) { name, albumId ->

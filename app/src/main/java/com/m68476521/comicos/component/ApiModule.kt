@@ -13,11 +13,8 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
-import okio.Timeout
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import timber.log.Timber
-import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -31,12 +28,14 @@ open class ApiModule {
     @Singleton
     open fun createClient(
         apiKey: String,
-        loggingInterceptor: HttpLoggingInterceptor
+        loggingInterceptor: HttpLoggingInterceptor,
     ): OkHttpClient {
-        var client = OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
-            .addInterceptor(RequestInterceptor(apiKey))
-            .build()
+        var client =
+            OkHttpClient
+                .Builder()
+                .addInterceptor(loggingInterceptor)
+                .addInterceptor(RequestInterceptor(apiKey))
+                .build()
 
         return client
     }
@@ -44,17 +43,18 @@ open class ApiModule {
     @Provides
     @Singleton
     open fun provideApiService(okHttpClient: OkHttpClient): ApiService =
-        Retrofit.Builder()
+        Retrofit
+            .Builder()
             .baseUrl("https://gateway.marvel.com/")
             .addConverterFactory(GsonConverterFactory.create(createDateFormatter()))
             .client(okHttpClient)
-            .build().create(ApiService::class.java)
+            .build()
+            .create(ApiService::class.java)
 
     private fun createDateFormatter(): Gson =
         GsonBuilder()
             .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
             .create()
-
 
     @Provides
     @Singleton
@@ -69,23 +69,28 @@ open class ApiModule {
 }
 
 class RequestInterceptor(
-    private val apiKey: String = ""
+    private val apiKey: String = "",
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val ts = System.currentTimeMillis()
 
-        Timber.d("MIKE TS " + ts.toString())
-        val url = chain.request().url()
-            .newBuilder()
-            .addQueryParameter("apikey", apiKey)
-            .addQueryParameter("hash", "")
-            .addQueryParameter("ts", "")
-
-            .build()
-        val newRequest = chain.request().newBuilder().url(url)
-            .header("Accept", "application/json")
-            .header("Content-type", "application/json")
-            .build()
+        val url =
+            chain
+                .request()
+                .url
+                .newBuilder()
+                .addQueryParameter("apikey", apiKey)
+                .addQueryParameter("hash", "")
+                .addQueryParameter("ts", "")
+                .build()
+        val newRequest =
+            chain
+                .request()
+                .newBuilder()
+                .url(url)
+                .header("Accept", "application/json")
+                .header("Content-type", "application/json")
+                .build()
         return chain.proceed(newRequest)
     }
 }

@@ -12,9 +12,9 @@ import timber.log.Timber
 fun NavController.navigateToDetailViewerScreen(
     navOptions: NavOptions? = null,
     albumId: String,
-    albumName: String
+    albumName: String,
 ) {
-    //handlePopBackStack(this)
+    // handlePopBackStack(this)
     Timber.d("MKE albumId $albumId albumName $albumName")
     this.navigate(ScreenDetail(albumId, albumName))
 }
@@ -22,14 +22,15 @@ fun NavController.navigateToDetailViewerScreen(
 fun NavGraphBuilder.detailViewerScreen(
     defaultAlbumId: String?,
     defaultAlbumName: String?,
-    viewModel: MyModel
+    viewModel: MyModel,
 ) {
     Timber.d("MKE ::: $defaultAlbumId $defaultAlbumName")
 
     composable<ScreenDetail> {
         val args = it.toRoute<ScreenDetail>()
         DetailViewerScreen(
-            viewModel = viewModel, subtotal = args.albumId + args.albumName
+            viewModel = viewModel,
+            subtotal = args.albumId + args.albumName,
         )
     }
 }
