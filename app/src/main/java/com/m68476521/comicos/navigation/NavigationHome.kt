@@ -5,7 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.m68476521.comicos.model.MyModel
-import com.m68476521.comicos.ui.homeScreen
+import com.m68476521.comicos.ui.HomeScreen
 
 fun NavController.navigateToHomeScreen(navOptions: NavOptions? = null) {
     // handlePopBackStack(this)
@@ -17,7 +17,7 @@ fun NavGraphBuilder.homeViewerScreen(
     navigateToDetailsScreen: (name: String?, albumId: String?) -> Unit,
 ) {
     composable<ScreenHome> {
-        homeScreen(viewModel) { name, albumId ->
+        HomeScreen(viewModel) { name, albumId ->
             navigateToDetailsScreen.invoke(name, albumId)
         }
     }

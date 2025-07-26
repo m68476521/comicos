@@ -27,6 +27,7 @@ retrofit = "3.0.0"
 timber = "5.0.1"
 kotlin = "2.2.0"
 ktlintVersion = "13.0.0"
+coils = "3.0.0"
 
 [libraries]
 adapter-rxjava3 = { module = "com.squareup.retrofit2:adapter-rxjava3", version.ref = "adapterRxjava3" }
@@ -69,6 +70,9 @@ logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", ver
 material = { module = "com.google.android.material:material", version.ref = "material" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
+coils = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coils" }
+coils-network-impl = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coils" }
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "android" }
