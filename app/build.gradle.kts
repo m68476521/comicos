@@ -135,4 +135,8 @@ dependencies {
 
     // Android Splash Screen
     implementation(libs.androidx.core.splashscreen)
+
+    // Coil
+    implementation(libs.coils)
+    implementation(libs.coils.network.impl)
 }
