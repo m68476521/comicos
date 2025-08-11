@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
         }
         installSplashScreen().apply {
             setKeepOnScreenCondition {
-                viewModel.comicsResponseData.value.data == null
+                viewModel.state.value.comicsResponse?.data == null
             }
         }
         setContent {

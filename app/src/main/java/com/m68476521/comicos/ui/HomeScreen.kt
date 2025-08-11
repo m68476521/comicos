@@ -29,6 +29,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import com.m68476521.comicos.home.data.HomeIntent
 import com.m68476521.comicos.model.MyModel
 
 @Composable
@@ -36,13 +37,13 @@ fun HomeScreen(
     viewModel: MyModel,
     itemSelected: (result: String?, albumId: String?) -> Unit,
 ) {
-    val data by viewModel.comicsResponseData.collectAsState()
+    val state by viewModel.state.collectAsState()
 
     LaunchedEffect(key1 = Unit) {
-        viewModel.getData()
+        viewModel.handleIntent(HomeIntent.LoadComics)
     }
 
-    val result = data.data?.results ?: return
+    val result = state.comicsResponse?.data?.results ?: return
 
     LazyVerticalStaggeredGrid(
         columns = StaggeredGridCells.Fixed(3),

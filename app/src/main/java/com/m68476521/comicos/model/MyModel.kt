@@ -2,6 +2,8 @@ package com.m68476521.comicos.model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.m68476521.comicos.home.data.HomeIntent
+import com.m68476521.comicos.home.data.HomeViewState
 import com.m68476521.comicos.repository.ApiRepository
 import com.m68476521.comicos.repository.ComicsResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,23 +18,35 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyModel
-    @Inject
-    constructor(
-        private val repository1: ApiRepository,
-    ) : ViewModel() {
-        private val comicsResponse = MutableStateFlow(ComicsResponse())
+@Inject
+constructor(
+    private val repository1: ApiRepository,
+) : ViewModel() {
 
-        val comicsResponseData: StateFlow<ComicsResponse> = comicsResponse.asStateFlow()
+    private val _state = MutableStateFlow(HomeViewState())
+    val state: StateFlow<HomeViewState> = _state
 
-        fun getData() {
-            viewModelScope.launch(Dispatchers.IO) {
-                repository1.getSessions().fold({
-                    Timber.e("There was an error")
-                }, { response ->
-                    comicsResponse.update {
-                        response
-                    }
-                })
+    fun handleIntent(intent: HomeIntent) {
+        viewModelScope.launch {
+            when (intent) {
+                is HomeIntent.LoadComics -> {
+                    getComics()
+                }
             }
         }
     }
+
+    fun getComics() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository1.getSessions().fold({
+                Timber.e("There was an error")
+            }, { response ->
+                _state.update {
+                    it.copy(
+                        comicsResponse = response
+                    )
+                }
+            })
+        }
+    }
+}

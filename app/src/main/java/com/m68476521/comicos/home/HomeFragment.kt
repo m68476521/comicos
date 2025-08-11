@@ -46,13 +46,13 @@ class HomeFragment : Fragment() {
 
     @Composable
     fun myList(viewModel: MyModel) {
-        val data by viewModel.comicsResponseData.collectAsState()
+        val state by viewModel.state.collectAsState()
 
         LaunchedEffect(key1 = Unit) {
-            viewModel.getData()
+            viewModel.getComics()
         }
 
-        val result = data.data?.results ?: return
+        val result = state.comicsResponse?.data?.results ?: return
         LazyColumn {
             items(result) { currentName ->
                 Text(
