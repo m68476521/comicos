@@ -1,5 +1,8 @@
 package com.m68476521.comicos.navigation
 
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -7,30 +10,34 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.m68476521.comicos.model.MyModel
 import com.m68476521.comicos.ui.DetailViewerScreen
-import timber.log.Timber
 
 fun NavController.navigateToDetailViewerScreen(
     navOptions: NavOptions? = null,
-    albumId: String,
+    image: String,
     albumName: String,
+
 ) {
-    // handlePopBackStack(this)
-    Timber.d("MKE albumId $albumId albumName $albumName")
-    this.navigate(ScreenDetail(albumId, albumName))
+    this.navigate(ScreenDetail(image, albumName))
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 fun NavGraphBuilder.detailViewerScreen(
-    defaultAlbumId: String?,
+    image: String,
     defaultAlbumName: String?,
     viewModel: MyModel,
+    animatedContentScope: AnimatedContentScope,
+    sharedTransitionScope: SharedTransitionScope,
+    onBack: () -> Unit,
 ) {
-    Timber.d("MKE ::: $defaultAlbumId $defaultAlbumName")
-
     composable<ScreenDetail> {
         val args = it.toRoute<ScreenDetail>()
         DetailViewerScreen(
             viewModel = viewModel,
-            subtotal = args.albumId + args.albumName,
-        )
+            image = args.image,
+            animatedContentScope = animatedContentScope,
+            sharedTransitionScope = sharedTransitionScope,
+        ) {
+            onBack()
+        }
     }
 }

@@ -49,7 +49,7 @@ android {
         compose = true
         buildConfig = true
     }
-
+    // TODO review this next line
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.13"
     }
@@ -104,6 +104,7 @@ dependencies {
     implementation(libs.androidx.material3)
 
     implementation(libs.androidx.ui)
+    implementation(libs.android.animation)
 
     // Android Studio Preview support
     implementation(libs.androidx.ui.tooling.preview)

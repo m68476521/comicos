@@ -5,12 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.m68476521.comicos.home.data.HomeIntent
 import com.m68476521.comicos.home.data.HomeViewState
 import com.m68476521.comicos.repository.ApiRepository
-import com.m68476521.comicos.repository.ComicsResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber

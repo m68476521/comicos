@@ -1,10 +1,11 @@
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -18,18 +19,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.m68476521.comicos.R
 import com.m68476521.comicos.model.MyModel
+import com.m68476521.comicos.navigation.ScreenDetail
 import com.m68476521.comicos.navigation.ScreenHome
-import com.m68476521.comicos.navigation.detailViewerScreen
-import com.m68476521.comicos.navigation.homeViewerScreen
-import com.m68476521.comicos.navigation.navigateToDetailViewerScreen
 import com.m68476521.comicos.ui.BottomNavigationBar
+import com.m68476521.comicos.ui.DetailViewerScreen
+import com.m68476521.comicos.ui.HomeScreen
 import java.lang.String.valueOf
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -60,17 +62,17 @@ fun ComicosBar(
     )
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun ComicosApp(
     viewModel: MyModel = viewModel(),
     navController: NavHostController = rememberNavController(),
 ) {
-    // Get current back stack entry
     val backStackEntry by navController.currentBackStackEntryAsState()
     // Get the name of the current screen
     val currentScreen =
         valueOf(
-            backStackEntry?.destination?.route ?: ScreenHome,
+            backStackEntry?.destination?.route ?: ScreenHome(),
         )
 
     Scaffold(
@@ -78,37 +80,51 @@ fun ComicosApp(
             ComicosBar(
                 currentScreen = currentScreen,
                 canNavigateBack = navController.previousBackStackEntry != null,
-                navigateUp = { navController.navigateUp() },
+                navigateUp = {
+                    navController.navigateUp()
+                },
             )
         },
         bottomBar = {
             BottomNavigationBar()
         },
     ) { innerPadding ->
-        NavHost(
-            navController = navController,
-            startDestination = ScreenHome,
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
-                    .padding(innerPadding),
-        ) {
-            fun goToDetailViewerScreen(navController: NavController): (albumName: String, albumId: String) -> Unit =
-                { albumId, albumName ->
-                    navController.navigateToDetailViewerScreen(
-                        albumId = albumId,
-                        albumName = albumName,
+        SharedTransitionLayout {
+            NavHost(
+                navController = navController,
+                startDestination = ScreenHome(),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
+                        .padding(innerPadding),
+            ) {
+
+                composable<ScreenHome> {
+                    HomeScreen(
+                        animatedContentScope = this@composable,
+                        sharedTransitionScope = this@SharedTransitionLayout,
+                        viewModel = viewModel,
+                    ) { image, id ->
+                        navController.navigate(ScreenDetail(image, id ?: "")) {
+                        }
+                    }
+                }
+
+                composable<ScreenDetail> {
+                    val args = it.toRoute<ScreenDetail>()
+                    DetailViewerScreen(
+                        animatedContentScope = this@composable,
+                        sharedTransitionScope = this@SharedTransitionLayout,
+                        viewModel = viewModel,
+                        id = args.id,
+                        image = args.image,
+                        onBack = {
+                            navController.popBackStack()
+                        }
                     )
                 }
-
-            homeViewerScreen(viewModel) { name, albumId ->
-                if (name != null && albumId != null) {
-                    goToDetailViewerScreen(navController)(name, albumId)
-                }
             }
-
-            detailViewerScreen("", "", viewModel)
         }
     }
 }

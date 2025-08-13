@@ -1,94 +1,57 @@
 package com.m68476521.comicos.ui
 
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import coil3.compose.AsyncImage
 import com.m68476521.comicos.model.MyModel
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun DetailViewerScreen(
     viewModel: MyModel,
-    subtotal: String = "",
-    options: ArrayList<String> = arrayListOf("Blue", "Yellow", "Orange", "Green"),
-    onSelectionChanged: (String) -> Unit = {},
-    onCancelButtonClicked: () -> Unit = {},
-    onNextButtonClicked: () -> Unit = {},
-    modifier: Modifier = Modifier,
+    id: String = "",
+    image: String = "",
+    animatedContentScope: AnimatedContentScope,
+    sharedTransitionScope: SharedTransitionScope,
+    onBack: () -> Unit,
 ) {
-    var selectedValue by rememberSaveable { mutableStateOf("") }
 
-// CurrencySection()
-
-    // TODO Just test the data pass, remove this
-        /*
-    options.add(subtotal)
-
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.SpaceBetween
-    ) {
-        Column(modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))) {
-            options.forEach { item ->
-                Row(
-                    modifier = Modifier.selectable(
-                        selected = selectedValue == item,
-                        onClick = {
-                            selectedValue = item
-                            onSelectionChanged(item)
-                        }
-                    ),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    RadioButton(
-                        selected = selectedValue == item,
-                        onClick = {
-                            selectedValue = item
-                            onSelectionChanged(item)
-                        }
-                    )
-                    Text(item)
-                }
-            }
-            Divider(
-                thickness = dimensionResource(R.dimen.thickness_divider),
-                modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_medium))
-            )
-            FormattedPriceLabel(
-                subtotal = subtotal,
-                modifier = Modifier
-                    .align(Alignment.End)
-                    .padding(
-                        top = dimensionResource(R.dimen.padding_medium),
-                        bottom = dimensionResource(R.dimen.padding_medium)
-                    )
-            )
-        }
-        Row(
+    Column(modifier = Modifier.fillMaxSize()) {
+        Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(dimensionResource(R.dimen.padding_medium)),
-            horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_medium)),
-            verticalAlignment = Alignment.Bottom
+                .fillMaxSize()
+                .clickable {
+                    onBack()
+                }
         ) {
-            OutlinedButton(
-                modifier = Modifier.weight(1f),
-                onClick = onCancelButtonClicked
-            ) {
-                Text(stringResource(R.string.home))
-            }
-            Button(
-                modifier = Modifier.weight(1f),
-                // the button is enabled when the user makes a selection
-                enabled = selectedValue.isNotEmpty(),
-                onClick = onNextButtonClicked
-            ) {
-                Text(stringResource(R.string.other))
+            with(sharedTransitionScope) {
+                AsyncImage(
+                    model = image,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                        .sharedElement(
+                            sharedContentState = rememberSharedContentState("image/$id"),
+                            animatedVisibilityScope = animatedContentScope,
+                            boundsTransform = { _, _ ->
+                                tween(durationMillis = 1000)
+                            }
+                        )
+                )
             }
         }
     }
-
-         */
 }
