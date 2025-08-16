@@ -1,9 +1,11 @@
 package com.m68476521.comicos.ui
 
 import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.EnterExitState
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.animateDp
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -16,10 +18,10 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -63,10 +65,16 @@ fun HomeScreen(
 
     val result = state.comicsResponse?.data?.results ?: return
     val listState = rememberLazyStaggeredGridState()
+    with(sharedTransitionScope) {
 
-    Surface(
-        modifier = Modifier.fillMaxSize()
-    ) {
+        val roundedCornerAnimation by animatedContentScope.transition
+            .animateDp(label = "roundedCornerAnimation") { enterExitState ->
+                when (enterExitState) {
+                    EnterExitState.PreEnter -> 0.dp
+                    EnterExitState.Visible -> 20.dp
+                    EnterExitState.PostExit -> 20.dp
+                }
+            }
 
         LazyVerticalStaggeredGrid(
             columns = StaggeredGridCells.Fixed(3),
@@ -75,9 +83,18 @@ fun HomeScreen(
             contentPadding = PaddingValues(10.dp),
             state = listState,
             modifier = Modifier
+                .sharedBounds(
+                    sharedContentState = rememberSharedContentState("bounds"),
+                    animatedVisibilityScope = animatedContentScope,
+                    resizeMode = SharedTransitionScope.ResizeMode.RemeasureToBounds,
+                    clipInOverlayDuringTransition = OverlayClip(
+                        RoundedCornerShape(roundedCornerAnimation)
+                    )
+                )
                 .fillMaxSize()
                 .padding(horizontal = 4.dp)
-                .height(100.dp), // TODO remote this line and figured out why this need to be fixed to 100
+                .height(100.dp) // TODO remote this line and figured out why this need to be fixed to 100
+
         ) {
             items(items = result, key = { it.id ?: it.upc ?: "" }) { currentItem ->
                 val image = currentItem.thumbnail?.path + "." + currentItem.thumbnail?.extension
@@ -90,6 +107,7 @@ fun HomeScreen(
                         .fillMaxWidth(),
                     elevation = CardDefaults.cardElevation(4.dp),
                     onClick = {
+                        viewModel.handleIntent(HomeIntent.SelectComic(currentItem))
                         itemSelected.invoke(image, currentItem.id.toString())
                     }
                 ) {
@@ -97,32 +115,34 @@ fun HomeScreen(
                     Box(
                         modifier = Modifier.fillMaxSize()
                     ) {
-                        with(sharedTransitionScope) {
-                            val request: ImageRequest =
-                                ImageRequest.Builder(LocalContext.current.applicationContext)
-                                    .data(image)
-                                    .crossfade(true)
-                                    .diskCacheKey(image)
-                                    .diskCachePolicy(CachePolicy.ENABLED)
-                                    .build()
 
-                            AsyncImage(
-                                model = request,
-                                contentDescription = null,
-                                contentScale = ContentScale.Crop,
-                                placeholder = painterResource(R.drawable.ic_launcher_background),
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .wrapContentHeight()
-                                    .sharedElement(
-                                        sharedContentState = rememberSharedContentState("image/${currentItem.id}"),
-                                        animatedVisibilityScope = animatedContentScope,
-                                        boundsTransform = { _, _ ->
-                                            tween(durationMillis = 1000)
-                                        }
-                                    )
-                            )
-                        }
+                        val request: ImageRequest =
+                            ImageRequest.Builder(LocalContext.current.applicationContext)
+                                .data(image)
+                                .crossfade(true)
+                                .diskCacheKey(image)
+                                .diskCachePolicy(CachePolicy.ENABLED)
+                                .build()
+
+                        AsyncImage(
+                            model = request,
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
+                            placeholder = painterResource(R.drawable.ic_launcher_background),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .wrapContentHeight()
+                                .sharedElement(
+                                    sharedContentState = rememberSharedContentState("image/${currentItem.id}"),
+                                    animatedVisibilityScope = animatedContentScope,
+                                    boundsTransform = { _, _ ->
+                                        spring(
+                                            dampingRatio = 0.6f,
+                                            stiffness = 380f,
+                                        )
+                                    }
+                                )
+                        )
 
                         Text(
                             text = currentItem.title ?: "",
@@ -141,6 +161,16 @@ fun HomeScreen(
                             modifier = Modifier
                                 .padding(4.dp)
                                 .align(Alignment.BottomCenter)
+                                .sharedElement(
+                                    sharedContentState = rememberSharedContentState("text/${currentItem.id}"),
+                                    animatedVisibilityScope = animatedContentScope,
+                                    boundsTransform = { _, _ ->
+                                        spring(
+                                            dampingRatio = 0.6f,
+                                            stiffness = 380f,
+                                        )
+                                    }
+                                )
                         )
                     }
                 }

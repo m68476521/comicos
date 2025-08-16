@@ -30,6 +30,14 @@ constructor(
                 is HomeIntent.LoadComics -> {
                     getComics()
                 }
+
+                is HomeIntent.SelectComic -> {
+                    _state.update {
+                        it.copy(
+                            currentComicSelected = intent.comic
+                        )
+                    }
+                }
             }
         }
     }
