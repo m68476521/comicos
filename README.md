@@ -9,7 +9,7 @@
 [![Hacktoberfest](https://img.shields.io/badge/Hacktoberfest-Contributor-orange.svg)](https://hacktoberfest.com)
 
 ---
-
+<!--
 ## 📱 Screenshots
 
 > _Add screenshots here. Tip: use a table to show multiple screens side by side._
@@ -19,7 +19,7 @@
 | ![List](screenshots/list.png) | ![Detail](screenshots/detail.png) |
 
 ---
-
+-->
 ## About
 
 **Comicos** is an Android application that lets users browse and explore information about comics. Built as a personal project to demonstrate modern Android development with a clean, declarative UI and a scalable architecture.
