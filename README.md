@@ -1,4 +1,4 @@
-# Comicos 🦸
+# Comicos
 
 > An Android app for exploring comics information — built with modern Android development best practices.
 
