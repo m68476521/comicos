@@ -30,11 +30,11 @@ The app fetches comic data from a remote API and presents it through a smooth, C
 
 ## Features
 
-- 📚 Browse a list of comics with cover art and metadata
-- 🔍 View detailed information for each comic (title, description, characters, etc.)
-- 🌐 Real-time data fetched from a remote comics API
-- ⚡ Fast, responsive UI built entirely with Jetpack Compose
-- 🧹 Code quality enforced with ktlint
+- Browse a list of comics with cover art and metadata
+- View detailed information for each comic (title, description, characters, etc.)
+- Real-time data fetched from a remote comics API
+- Fast, responsive UI built entirely with Jetpack Compose
+- Code quality enforced with ktlint
 
 ---
 
@@ -139,7 +139,7 @@ Run the linter manually:
 
 ## Contributing
 
-Contributions are welcome — this project participates in **Hacktoberfest** 🎃
+Contributions are welcome — this project participates in **Hacktoberfest**
 
 1. Fork the repo
 2. Create your feature branch: `git checkout -b feature/your-feature`
@@ -155,9 +155,9 @@ Please make sure `./gradlew ktlintCheck` passes before submitting.
 
 **Miguel Orozco Delgado** — Senior Android Engineer
 
-- 🌐 [m68476521.com](https://www.m68476521.com)
-- 💼 [LinkedIn](https://linkedin.com/in/m-orozco-delgado)
-- 🐙 [GitHub](https://github.com/m68476521)
+- [m68476521.com](https://www.m68476521.com)
+- [LinkedIn](https://linkedin.com/in/m-orozco-delgado)
+- [GitHub](https://github.com/m68476521)
 
 ---
 
